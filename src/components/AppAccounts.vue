@@ -111,10 +111,27 @@
             </b-form-input>
           </b-form-group>
 
+          <!-- New Country Field -->
+          <b-form-group
+            id="form-country-group"
+            label="Country:"
+            label-for="form-country-input"
+          >
+            <b-form-input
+              id="form-country-input"
+              type="text"
+              v-model="createAccountForm.country"
+              placeholder="Enter Country"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
+
           <b-button type="submit" variant="outline-info">Submit</b-button>
         </b-form>
       </b-modal>
       <!-- End of Modal for Create Account-->
+
       <!-- Start of Modal for Edit Account-->
       <b-modal
         ref="editAccountModal"
@@ -138,6 +155,23 @@
             >
             </b-form-input>
           </b-form-group>
+
+          <!-- New Country Field -->
+          <b-form-group
+            id="form-edit-country-group"
+            label="Country:"
+            label-for="form-edit-country-input"
+          >
+            <b-form-input
+              id="form-edit-country-input"
+              type="text"
+              v-model="editAccountForm.country"
+              placeholder="Enter Country"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
+
           <b-button type="submit" variant="outline-info">Update</b-button>
         </b-form>
       </b-modal>
@@ -145,7 +179,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 export default {
@@ -156,10 +189,12 @@ export default {
       createAccountForm: {
         name: "",
         currency: "",
+        country: "",  // <-- Added country field
       },
       editAccountForm: {
         id: "",
         name: "",
+        country: "",  // <-- Added country field
       },
       showMessage: false,
       message: "",
@@ -191,7 +226,7 @@ export default {
         .then((response) => {
           this.RESTgetAccounts();
           // For message alert
-          this.message = "Account Created succesfully!";
+          this.message = "Account Created successfully!";
           // To actually show the message
           this.showMessage = true;
           // To hide the message after 3 seconds
@@ -213,7 +248,7 @@ export default {
         .then((response) => {
           this.RESTgetAccounts();
           // For message alert
-          this.message = "Account Updated succesfully!";
+          this.message = "Account Updated successfully!";
           // To actually show the message
           this.showMessage = true;
           // To hide the message after 3 seconds
@@ -235,7 +270,7 @@ export default {
         .then((response) => {
           this.RESTgetAccounts();
           // For message alert
-          this.message = "Account Deleted succesfully!";
+          this.message = "Account Deleted successfully!";
           // To actually show the message
           this.showMessage = true;
           // To hide the message after 3 seconds
@@ -257,8 +292,10 @@ export default {
     initForm() {
       this.createAccountForm.name = "";
       this.createAccountForm.currency = "";
+      this.createAccountForm.country = "";  // <-- Reset country field
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
+      this.editAccountForm.country = "";  // <-- Reset country field
     },
 
     // Handle submit event for create account
@@ -268,6 +305,7 @@ export default {
       const payload = {
         name: this.createAccountForm.name,
         currency: this.createAccountForm.currency,
+        country: this.createAccountForm.country,  // <-- Add country field
       };
       this.RESTcreateAccount(payload);
       this.initForm();
@@ -279,6 +317,7 @@ export default {
       this.$refs.editAccountModal.hide(); //hide the modal when submitted
       const payload = {
         name: this.editAccountForm.name,
+        country: this.editAccountForm.country,  // <-- Add country field
       };
       this.RESTupdateAccount(payload, this.editAccountForm.id);
       this.initForm();
