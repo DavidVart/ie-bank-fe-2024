@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  FRONTEND_WEBAPP_DEV: aguadamillas-fe-dev
+  FRONTEND_WEBAPP_DEV: jvargas-fe-dev
 
 jobs:
   build:
